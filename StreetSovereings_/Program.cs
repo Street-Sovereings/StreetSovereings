@@ -11,14 +11,14 @@ namespace StreetSovereigns
         private readonly float[] _vertices =
         {
             // Positions          // Colors
-            -0.5f, -0.5f, -0.5f,  1.0f, 0.0f, 0.0f,
-             0.5f, -0.5f, -0.5f,  0.0f, 1.0f, 0.0f,
-             0.5f,  0.5f, -0.5f,  0.0f, 0.0f, 1.0f,
-            -0.5f,  0.5f, -0.5f,  1.0f, 1.0f, 0.0f,
-            -0.5f, -0.5f,  0.5f,  1.0f, 0.0f, 1.0f,
-             0.5f, -0.5f,  0.5f,  0.0f, 1.0f, 1.0f,
-             0.5f,  0.5f,  0.5f,  1.0f, 1.0f, 1.0f,
-            -0.5f,  0.5f,  0.5f,  0.0f, 0.0f, 0.0f,
+            -0.5f, -0.5f, -0.5f,  1.0f, 0.0f, 0.0f, // Red
+             0.5f, -0.5f, -0.5f,  0.0f, 1.0f, 0.0f, // Green
+             0.5f,  0.5f, -0.5f,  0.0f, 0.0f, 1.0f, // Blue
+            -0.5f,  0.5f, -0.5f,  1.0f, 1.0f, 0.0f, // Yellow
+            -0.5f, -0.5f,  0.5f,  1.0f, 0.0f, 1.0f, // Magenta
+             0.5f, -0.5f,  0.5f,  0.0f, 1.0f, 1.0f, // Cyan
+             0.5f,  0.5f,  0.5f,  1.0f, 1.0f, 1.0f, // White
+            -0.5f,  0.5f,  0.5f,  0.0f, 0.0f, 0.0f, // Black
         };
 
         private readonly uint[] _indices =
