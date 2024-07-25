@@ -11,4 +11,13 @@
     <PackageReference Include="OpenTK" Version="4.8.2" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Compile Update="Engine.cs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Update="Program.cs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+  </ItemGroup>
+
 </Project>

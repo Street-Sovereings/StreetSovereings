@@ -30,3 +30,5 @@ E:\Street_Sovereings_Game\StreetSovereings\StreetSovereings\StreetSovereings_\ob
 E:\Street_Sovereings_Game\StreetSovereings\StreetSovereings\StreetSovereings_\obj\Debug\net8.0\StreetSovereings_.pdb
 E:\Street_Sovereings_Game\StreetSovereings\StreetSovereings\StreetSovereings_\obj\Debug\net8.0\StreetSovereings_.genruntimeconfig.cache
 E:\Street_Sovereings_Game\StreetSovereings\StreetSovereings\StreetSovereings_\obj\Debug\net8.0\ref\StreetSovereings_.dll
+E:\Street_Sovereings_Game\StreetSovereings\StreetSovereings\StreetSovereings_\bin\Debug\net8.0\Engine.cs
+E:\Street_Sovereings_Game\StreetSovereings\StreetSovereings\StreetSovereings_\bin\Debug\net8.0\Program.cs
