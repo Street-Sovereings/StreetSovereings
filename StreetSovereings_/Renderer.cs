@@ -1,10 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using OpenTK.Graphics.OpenGL4;
+﻿using OpenTK.Graphics.OpenGL4;
 using OpenTK.Mathematics;
 using OpenTK.Windowing.Common;
 using OpenTK.Windowing.Desktop;
 using System;
+using System.Collections.Generic;
 
 namespace StreetSovereings_
 {
@@ -12,6 +11,8 @@ namespace StreetSovereings_
     {
         public class Game : GameWindow
         {
+            private readonly CubeManager _cubeManager = new CubeManager();
+
             private readonly float[] _vertices =
             {
                 // Positions          // Colors
@@ -83,6 +84,9 @@ namespace StreetSovereings_
                 _shaderProgram = CreateShaderProgram();
 
                 GL.Enable(EnableCap.DepthTest);
+
+                // Add a default cube
+                AddCube(0.0f, 0.0f, 0.0f, new Vector4(1.0f, 0.0f, 0.0f, 1.0f), 1.0f);
             }
 
             protected override void OnRenderFrame(FrameEventArgs args)
@@ -96,17 +100,25 @@ namespace StreetSovereings_
 
                 // Update and set the transformation matrices
                 _rotation += 0.0005f;
-                var model = Matrix4.CreateRotationY(_rotation) * Matrix4.CreateRotationX(_rotation);
+
                 var view = Matrix4.LookAt(new Vector3(1.5f, 1.5f, 1.5f), Vector3.Zero, Vector3.UnitY);
                 var projection = Matrix4.CreatePerspectiveFieldOfView(MathHelper.DegreesToRadians(45.0f), Size.X / (float)Size.Y, 0.1f, 100.0f);
 
-                GL.UniformMatrix4(GL.GetUniformLocation(_shaderProgram, "model"), false, ref model);
                 GL.UniformMatrix4(GL.GetUniformLocation(_shaderProgram, "view"), false, ref view);
                 GL.UniformMatrix4(GL.GetUniformLocation(_shaderProgram, "projection"), false, ref projection);
 
-                // Bind VAO and draw
-                GL.BindVertexArray(_vao);
-                GL.DrawElements(PrimitiveType.Triangles, _indices.Length, DrawElementsType.UnsignedInt, 0);
+                foreach (var cube in _cubeManager.GetCubes())
+                {
+                    var model = Matrix4.CreateTranslation(cube.Position) * Matrix4.CreateRotationY(_rotation) * Matrix4.CreateRotationX(_rotation);
+                    GL.UniformMatrix4(GL.GetUniformLocation(_shaderProgram, "model"), false, ref model);
+
+                    // Set the cube's color
+                    GL.Uniform4(GL.GetUniformLocation(_shaderProgram, "color"), cube.Color);
+
+                    // Bind VAO and draw
+                    GL.BindVertexArray(_vao);
+                    GL.DrawElements(PrimitiveType.Triangles, _indices.Length, DrawElementsType.UnsignedInt, 0);
+                }
 
                 SwapBuffers();
             }
@@ -180,6 +192,11 @@ namespace StreetSovereings_
                     string infoLog = GL.GetProgramInfoLog(program);
                     throw new Exception($"Program link failed: {infoLog}");
                 }
+            }
+
+            public void AddCube(float x, float y, float z, Vector4 rgba, float mass)
+            {
+                _cubeManager.AddCube(x, y, z, rgba, mass);
             }
         }
     }
