@@ -7,7 +7,7 @@ namespace StreetSovereings_
         [STAThread]
         public static void Main()
         {
-            using (var game = new Engine.Game())
+            using (var game = new Renderer.Game())
             {
                 game.Run();
             }
