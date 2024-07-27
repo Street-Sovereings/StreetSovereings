@@ -2,6 +2,7 @@
 using OpenTK.Mathematics;
 using OpenTK.Windowing.Common;
 using OpenTK.Windowing.Desktop;
+using OpenTK.Windowing.GraphicsLibraryFramework;
 using System;
 using System.Collections.Generic;
 
@@ -40,6 +41,7 @@ namespace StreetSovereings_
             private int _vbo;
             private int _ebo;
             private int _shaderProgram;
+            private Vector3 _cameraPosition = new Vector3(1.5f, 1.5f, 3f);
 
             private float _rotation;
 
@@ -88,6 +90,27 @@ namespace StreetSovereings_
                 // Add a default cube
                 AddCube(0.0f, 0.0f, 0.0f, new Vector4(1.0f, 0.0f, 0.0f, 1.0f), 1.0f);
             }
+            protected override void OnUpdateFrame(FrameEventArgs args)
+            {
+                base.OnUpdateFrame(args);
+
+                if (KeyboardState.IsKeyDown(Keys.W))
+                {
+                    _cameraPosition += new Vector3(0, 0, -0.001f);
+                }
+                if (KeyboardState.IsKeyDown(Keys.S))
+                {
+                    _cameraPosition += new Vector3(0, 0, 0.001f);
+                }
+                if (KeyboardState.IsKeyDown(Keys.A))
+                {
+                    _cameraPosition += new Vector3(-0.001f, 0, 0);
+                }
+                if (KeyboardState.IsKeyDown(Keys.D))
+                {
+                    _cameraPosition += new Vector3(0.001f, 0, 0);
+                }
+            }
 
             protected override void OnRenderFrame(FrameEventArgs args)
             {
@@ -101,7 +124,7 @@ namespace StreetSovereings_
                 // Update and set the transformation matrices
                 _rotation += 0.0005f;
 
-                var view = Matrix4.LookAt(new Vector3(1.5f, 1.5f, 1.5f), Vector3.Zero, Vector3.UnitY);
+                var view = Matrix4.LookAt(_cameraPosition, Vector3.Zero, Vector3.UnitY);
                 var projection = Matrix4.CreatePerspectiveFieldOfView(MathHelper.DegreesToRadians(45.0f), Size.X / (float)Size.Y, 0.1f, 100.0f);
 
                 GL.UniformMatrix4(GL.GetUniformLocation(_shaderProgram, "view"), false, ref view);

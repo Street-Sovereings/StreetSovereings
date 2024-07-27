@@ -12,6 +12,7 @@ namespace StreetSovereings_
             {
                 game.AddCube(0.0f, 0.0f, 0.0f, new Vector4(1.0f, 0.0f, 0.0f, 1.0f), 1.0f);
                 game.AddCube(1.0f, 1.0f, 0.0f, new Vector4(0.0f, 1.0f, 0.0f, 1.0f), 1.0f);
+                game.AddCube(4.0f, 4.0f, 0.0f, new Vector4(0.0f, 0.0f, 1.0f, 1.0f), 1.0f);
                 game.Run();
             }
         }
