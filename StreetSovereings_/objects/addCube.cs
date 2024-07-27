@@ -1,7 +1,6 @@
 ﻿using OpenTK.Mathematics;
-using System.Collections.Generic;
 
-namespace StreetSovereings_
+namespace StreetSovereings_.objects
 {
     public class Cube
     {

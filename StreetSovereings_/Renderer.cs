@@ -3,8 +3,7 @@ using OpenTK.Mathematics;
 using OpenTK.Windowing.Common;
 using OpenTK.Windowing.Desktop;
 using OpenTK.Windowing.GraphicsLibraryFramework;
-using System;
-using System.Collections.Generic;
+using StreetSovereings_.objects;
 
 namespace StreetSovereings_
 {
@@ -44,6 +43,7 @@ namespace StreetSovereings_
             private Vector3 _cameraPosition = new Vector3(1.5f, 1.5f, 3f);
 
             private float _rotation;
+            float speed = 0.001f;
 
             public Game() : base(GameWindowSettings.Default, new NativeWindowSettings
             {
@@ -96,19 +96,23 @@ namespace StreetSovereings_
 
                 if (KeyboardState.IsKeyDown(Keys.W))
                 {
-                    _cameraPosition += new Vector3(0, 0, -0.001f);
+                    _cameraPosition += new Vector3(0, 0, -speed);
+                    Console.WriteLine(_cameraPosition);
                 }
                 if (KeyboardState.IsKeyDown(Keys.S))
                 {
-                    _cameraPosition += new Vector3(0, 0, 0.001f);
+                    _cameraPosition += new Vector3(0, 0, speed);
+                    Console.WriteLine(_cameraPosition);
                 }
                 if (KeyboardState.IsKeyDown(Keys.A))
                 {
-                    _cameraPosition += new Vector3(-0.001f, 0, 0);
+                    _cameraPosition += new Vector3(-speed, 0, 0);
+                    Console.WriteLine(_cameraPosition);
                 }
                 if (KeyboardState.IsKeyDown(Keys.D))
                 {
-                    _cameraPosition += new Vector3(0.001f, 0, 0);
+                    _cameraPosition += new Vector3(speed, 0, 0);
+                    Console.WriteLine(_cameraPosition);
                 }
             }
 
@@ -221,6 +225,7 @@ namespace StreetSovereings_
             {
                 _cubeManager.AddCube(x, y, z, rgba, mass);
             }
+
         }
     }
 }
