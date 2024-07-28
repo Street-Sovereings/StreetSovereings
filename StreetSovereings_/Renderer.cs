@@ -1,4 +1,5 @@
-﻿using OpenTK.Graphics.OpenGL4;
+﻿using OpenTK.Graphics.GL;
+using OpenTK.Graphics.OpenGL4;
 using OpenTK.Mathematics;
 using OpenTK.Windowing.Common;
 using OpenTK.Windowing.Desktop;
@@ -40,10 +41,13 @@ namespace StreetSovereings_
             private int _vbo;
             private int _ebo;
             private int _shaderProgram;
-            private Vector3 _cameraPosition = new Vector3(1.5f, 1.5f, 3f);
+            public Vector3 _cameraPosition = new Vector3(1.5f, 1.5f, 3f);
+            private bool _leftControlPressed = false;
 
             private float _rotation;
-            float speed = 0.001f;
+         
+            float speed= 0.001f;
+            float _initialSpeed;
 
             public Game() : base(GameWindowSettings.Default, new NativeWindowSettings
             {
@@ -57,6 +61,7 @@ namespace StreetSovereings_
             {
                 base.OnLoad();
                 GL.ClearColor(Color4.CornflowerBlue);
+
 
                 // Create VAO
                 _vao = GL.GenVertexArray();
@@ -89,30 +94,61 @@ namespace StreetSovereings_
 
                 // Add a default cube
                 AddCube(0.0f, 0.0f, 0.0f, new Vector4(1.0f, 0.0f, 0.0f, 1.0f), 1.0f);
+
             }
             protected override void OnUpdateFrame(FrameEventArgs args)
             {
                 base.OnUpdateFrame(args);
 
-                if (KeyboardState.IsKeyDown(Keys.W))
+                var input = KeyboardState;
+
+                if (input.IsKeyDown(Keys.W))
                 {
                     _cameraPosition += new Vector3(0, 0, -speed);
                     Console.WriteLine(_cameraPosition);
+                    Console.WriteLine(speed);
                 }
-                if (KeyboardState.IsKeyDown(Keys.S))
+                if (input.IsKeyDown(Keys.S))
                 {
                     _cameraPosition += new Vector3(0, 0, speed);
                     Console.WriteLine(_cameraPosition);
+                    Console.WriteLine(speed);
                 }
-                if (KeyboardState.IsKeyDown(Keys.A))
+                if (input.IsKeyDown(Keys.A))
                 {
                     _cameraPosition += new Vector3(-speed, 0, 0);
                     Console.WriteLine(_cameraPosition);
+                    Console.WriteLine(speed);
                 }
-                if (KeyboardState.IsKeyDown(Keys.D))
+                if (input.IsKeyDown(Keys.D))
                 {
                     _cameraPosition += new Vector3(speed, 0, 0);
                     Console.WriteLine(_cameraPosition);
+                    Console.WriteLine(speed);
+                }
+                if (input.IsKeyDown(Keys.Space))
+                {
+                    _cameraPosition += new Vector3(0, speed, 0);
+                    Console.WriteLine(_cameraPosition);
+                    Console.WriteLine(speed);
+                }
+                if (input.IsKeyDown(Keys.LeftShift))
+                {
+                    _cameraPosition += new Vector3(0, -speed, 0);
+                    Console.WriteLine(_cameraPosition);
+                    Console.WriteLine(speed);
+                }
+                if (input.IsKeyPressed(Keys.LeftControl) && !_leftControlPressed) 
+                {
+                    _initialSpeed = speed;
+                    speed += speed;
+                    Console.WriteLine(speed);
+                    _leftControlPressed = true;
+                }
+                else if (input.IsKeyReleased(Keys.LeftControl) && _leftControlPressed)
+                {
+                    _leftControlPressed = false;
+                    speed = _initialSpeed;
                 }
             }
 
@@ -188,7 +224,7 @@ namespace StreetSovereings_
                 GL.ShaderSource(fragmentShader, fragmentShaderSource);
                 GL.CompileShader(fragmentShader);
                 CheckShaderCompileStatus(fragmentShader);
-
+                
                 int shaderProgram = GL.CreateProgram();
                 GL.AttachShader(shaderProgram, vertexShader);
                 GL.AttachShader(shaderProgram, fragmentShader);

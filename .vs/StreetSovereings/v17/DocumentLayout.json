@@ -3,12 +3,12 @@
   "WorkspaceRootPath": "E:\\Street_Sovereings_Game\\StreetSovereings\\StreetSovereings\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{31DC468E-5908-4424-88D1-5D082962D9CE}|StreetSovereings_\\StreetSovereings_.csproj|e:\\street_sovereings_game\\streetsovereings\\streetsovereings\\streetsovereings_\\objects\\addcube.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{31DC468E-5908-4424-88D1-5D082962D9CE}|StreetSovereings_\\StreetSovereings_.csproj|solutionrelative:streetsovereings_\\objects\\addcube.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{31DC468E-5908-4424-88D1-5D082962D9CE}|StreetSovereings_\\StreetSovereings_.csproj|e:\\street_sovereings_game\\streetsovereings\\streetsovereings\\streetsovereings_\\renderer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{31DC468E-5908-4424-88D1-5D082962D9CE}|StreetSovereings_\\StreetSovereings_.csproj|solutionrelative:streetsovereings_\\renderer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{31DC468E-5908-4424-88D1-5D082962D9CE}|StreetSovereings_\\StreetSovereings_.csproj|e:\\street_sovereings_game\\streetsovereings\\streetsovereings\\streetsovereings_\\objects\\addcube.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{31DC468E-5908-4424-88D1-5D082962D9CE}|StreetSovereings_\\StreetSovereings_.csproj|solutionrelative:streetsovereings_\\objects\\addcube.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{31DC468E-5908-4424-88D1-5D082962D9CE}|StreetSovereings_\\StreetSovereings_.csproj|e:\\street_sovereings_game\\streetsovereings\\streetsovereings\\streetsovereings_\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -25,27 +25,31 @@
           "SelectedChildIndex": 1,
           "Children": [
             {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{aa2115a1-9712-457b-9047-dbb71ca2cdd2}"
+            },
+            {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 0,
               "Title": "Renderer.cs",
               "DocumentMoniker": "E:\\Street_Sovereings_Game\\StreetSovereings\\StreetSovereings\\StreetSovereings_\\Renderer.cs",
               "RelativeDocumentMoniker": "StreetSovereings_\\Renderer.cs",
               "ToolTip": "E:\\Street_Sovereings_Game\\StreetSovereings\\StreetSovereings\\StreetSovereings_\\Renderer.cs",
               "RelativeToolTip": "StreetSovereings_\\Renderer.cs",
-              "ViewState": "AQIAABYAAAAAAAAAAAAgwC0AAAAhAAAA",
+              "ViewState": "AQIAAHkAAAAAAAAAAAAgwIsAAAARAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-07-26T09:21:01.763Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 1,
               "Title": "addCube.cs",
               "DocumentMoniker": "E:\\Street_Sovereings_Game\\StreetSovereings\\StreetSovereings\\StreetSovereings_\\objects\\addCube.cs",
               "RelativeDocumentMoniker": "StreetSovereings_\\objects\\addCube.cs",
               "ToolTip": "E:\\Street_Sovereings_Game\\StreetSovereings\\StreetSovereings\\StreetSovereings_\\objects\\addCube.cs",
               "RelativeToolTip": "StreetSovereings_\\objects\\addCube.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAkAAAAAAAAA",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAA8AAAAJAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-07-26T09:20:47.391Z",
               "EditorCaption": ""
@@ -58,7 +62,7 @@
               "RelativeDocumentMoniker": "StreetSovereings_\\Program.cs",
               "ToolTip": "E:\\Street_Sovereings_Game\\StreetSovereings\\StreetSovereings\\StreetSovereings_\\Program.cs",
               "RelativeToolTip": "StreetSovereings_\\Program.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAoAAAAyAAAA",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAwAAAAyAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-07-21T13:18:37.475Z",
               "EditorCaption": ""
