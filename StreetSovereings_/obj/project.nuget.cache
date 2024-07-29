@@ -1,9 +1,19 @@
 {
   "version": 2,
-  "dgSpecHash": "kzbBDp4w7ow=",
+  "dgSpecHash": "wYbZqHfO7oA=",
   "success": true,
   "projectFilePath": "E:\\Street_Sovereings_Game\\StreetSovereings\\StreetSovereings\\StreetSovereings_\\StreetSovereings_.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\misha\\.nuget\\packages\\awesomium.netwrapper.unofficial\\1.7.5\\awesomium.netwrapper.unofficial.1.7.5.nupkg.sha512",
+    "C:\\Users\\misha\\.nuget\\packages\\microsoft.netcore.platforms\\3.1.0\\microsoft.netcore.platforms.3.1.0.nupkg.sha512",
+    "C:\\Users\\misha\\.nuget\\packages\\microsoft.win32.registry\\4.7.0\\microsoft.win32.registry.4.7.0.nupkg.sha512",
+    "C:\\Users\\misha\\.nuget\\packages\\mvvm.awesomium\\0.9.9\\mvvm.awesomium.0.9.9.nupkg.sha512",
+    "C:\\Users\\misha\\.nuget\\packages\\naudio\\2.2.1\\naudio.2.2.1.nupkg.sha512",
+    "C:\\Users\\misha\\.nuget\\packages\\naudio.asio\\2.2.1\\naudio.asio.2.2.1.nupkg.sha512",
+    "C:\\Users\\misha\\.nuget\\packages\\naudio.core\\2.2.1\\naudio.core.2.2.1.nupkg.sha512",
+    "C:\\Users\\misha\\.nuget\\packages\\naudio.midi\\2.2.1\\naudio.midi.2.2.1.nupkg.sha512",
+    "C:\\Users\\misha\\.nuget\\packages\\naudio.wasapi\\2.2.1\\naudio.wasapi.2.2.1.nupkg.sha512",
+    "C:\\Users\\misha\\.nuget\\packages\\naudio.winmm\\2.2.1\\naudio.winmm.2.2.1.nupkg.sha512",
     "C:\\Users\\misha\\.nuget\\packages\\opentk\\4.8.2\\opentk.4.8.2.nupkg.sha512",
     "C:\\Users\\misha\\.nuget\\packages\\opentk.audio.openal\\4.8.2\\opentk.audio.openal.4.8.2.nupkg.sha512",
     "C:\\Users\\misha\\.nuget\\packages\\opentk.compute\\4.8.2\\opentk.compute.4.8.2.nupkg.sha512",
@@ -16,7 +26,51 @@
     "C:\\Users\\misha\\.nuget\\packages\\opentk.windowing.desktop\\4.8.2\\opentk.windowing.desktop.4.8.2.nupkg.sha512",
     "C:\\Users\\misha\\.nuget\\packages\\opentk.windowing.graphicslibraryframework\\4.8.2\\opentk.windowing.graphicslibraryframework.4.8.2.nupkg.sha512",
     "C:\\Users\\misha\\.nuget\\packages\\system.runtime.compilerservices.unsafe\\5.0.0\\system.runtime.compilerservices.unsafe.5.0.0.nupkg.sha512",
-    "C:\\Users\\misha\\.nuget\\packages\\system.windows.extensions\\8.0.0\\system.windows.extensions.8.0.0.nupkg.sha512"
+    "C:\\Users\\misha\\.nuget\\packages\\system.security.accesscontrol\\4.7.0\\system.security.accesscontrol.4.7.0.nupkg.sha512",
+    "C:\\Users\\misha\\.nuget\\packages\\system.security.principal.windows\\4.7.0\\system.security.principal.windows.4.7.0.nupkg.sha512",
+    "C:\\Users\\misha\\.nuget\\packages\\system.windows.extensions\\8.0.0\\system.windows.extensions.8.0.0.nupkg.sha512",
+    "C:\\Users\\misha\\.nuget\\packages\\unofficial.awesomium.complete\\1.7.4.2\\unofficial.awesomium.complete.1.7.4.2.nupkg.sha512"
   ],
-  "logs": []
+  "logs": [
+    {
+      "code": "NU1603",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "MVVM.awesomium 0.9.9 depends on Unofficial.Awesomium.Complete (>= 1.7.2) but Unofficial.Awesomium.Complete 1.7.2 was not found. An approximate best match of Unofficial.Awesomium.Complete 1.7.4.2 was resolved.",
+      "libraryId": "Unofficial.Awesomium.Complete",
+      "targetGraphs": [
+        "net8.0"
+      ]
+    },
+    {
+      "code": "NU1701",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Package 'Awesomium.NetWrapper.Unofficial 1.7.5' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1' instead of the project target framework 'net8.0'. This package may not be fully compatible with your project.",
+      "libraryId": "Awesomium.NetWrapper.Unofficial",
+      "targetGraphs": [
+        "net8.0"
+      ]
+    },
+    {
+      "code": "NU1701",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Package 'MVVM.awesomium 0.9.9' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1' instead of the project target framework 'net8.0'. This package may not be fully compatible with your project.",
+      "libraryId": "MVVM.awesomium",
+      "targetGraphs": [
+        "net8.0"
+      ]
+    },
+    {
+      "code": "NU1701",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Package 'Unofficial.Awesomium.Complete 1.7.4.2' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1' instead of the project target framework 'net8.0'. This package may not be fully compatible with your project.",
+      "libraryId": "Unofficial.Awesomium.Complete",
+      "targetGraphs": [
+        "net8.0"
+      ]
+    }
+  ]
 }

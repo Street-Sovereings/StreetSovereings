@@ -52,7 +52,23 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "dependencies": {
+            "Awesomium.NetWrapper.Unofficial": {
+              "target": "Package",
+              "version": "[1.7.5, )"
+            },
+            "MVVM.awesomium": {
+              "target": "Package",
+              "version": "[0.9.9, )"
+            },
+            "NAudio": {
+              "target": "Package",
+              "version": "[2.2.1, )"
+            },
             "OpenTK": {
+              "target": "Package",
+              "version": "[4.8.2, )"
+            },
+            "OpenTK.Audio.OpenAL": {
               "target": "Package",
               "version": "[4.8.2, )"
             },

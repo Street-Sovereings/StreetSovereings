@@ -14,4 +14,7 @@
     <SourceRoot Include="D:\1\NuGetPackages\" />
     <SourceRoot Include="C:\Program Files (x86)\Microsoft\Xamarin\NuGet\" />
   </ItemGroup>
+  <PropertyGroup Condition=" '$(ExcludeRestorePackageImports)' != 'true' ">
+    <PkgMVVM_awesomium Condition=" '$(PkgMVVM_awesomium)' == '' ">C:\Users\misha\.nuget\packages\mvvm.awesomium\0.9.9</PkgMVVM_awesomium>
+  </PropertyGroup>
 </Project>

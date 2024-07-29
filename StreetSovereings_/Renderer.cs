@@ -1,10 +1,11 @@
-﻿using OpenTK.Graphics.GL;
+﻿using NAudio.Wave;
 using OpenTK.Graphics.OpenGL4;
 using OpenTK.Mathematics;
 using OpenTK.Windowing.Common;
 using OpenTK.Windowing.Desktop;
 using OpenTK.Windowing.GraphicsLibraryFramework;
 using StreetSovereings_.objects;
+using System;
 
 namespace StreetSovereings_
 {
@@ -41,12 +42,17 @@ namespace StreetSovereings_
             private int _vbo;
             private int _ebo;
             private int _shaderProgram;
+
+            private IWavePlayer waveOutDeviceWalking;
+            private Mp3FileReader mp3FileReader;
+            private bool isWalkingSoundPlaying = false;
+
             public Vector3 _cameraPosition = new Vector3(1.5f, 1.5f, 3f);
             private bool _leftControlPressed = false;
 
             private float _rotation;
-         
-            float speed= 0.001f;
+
+            float speed = 0.001f;
             float _initialSpeed;
 
             public Game() : base(GameWindowSettings.Default, new NativeWindowSettings
@@ -62,6 +68,8 @@ namespace StreetSovereings_
                 base.OnLoad();
                 GL.ClearColor(Color4.CornflowerBlue);
 
+                waveOutDeviceWalking = new WaveOutEvent();
+                waveOutDeviceWalking.PlaybackStopped += OnPlaybackWalkingStopped;
 
                 // Create VAO
                 _vao = GL.GenVertexArray();
@@ -94,8 +102,21 @@ namespace StreetSovereings_
 
                 // Add a default cube
                 AddCube(0.0f, 0.0f, 0.0f, new Vector4(1.0f, 0.0f, 0.0f, 1.0f), 1.0f);
-
             }
+
+            private void InitializeAudio()
+            {
+                mp3FileReader?.Dispose();
+
+                mp3FileReader = new Mp3FileReader("./assets/sounds/walking.mp3");
+                waveOutDeviceWalking.Init(mp3FileReader);
+            }
+
+            private void OnPlaybackWalkingStopped(object sender, StoppedEventArgs e)
+            {
+                isWalkingSoundPlaying = false;
+            }
+
             protected override void OnUpdateFrame(FrameEventArgs args)
             {
                 base.OnUpdateFrame(args);
@@ -107,25 +128,66 @@ namespace StreetSovereings_
                     _cameraPosition += new Vector3(0, 0, -speed);
                     Console.WriteLine(_cameraPosition);
                     Console.WriteLine(speed);
+
+                    if (!isWalkingSoundPlaying)
+                    {
+                        waveOutDeviceWalking.Stop();
+                        InitializeAudio();
+                        waveOutDeviceWalking.Play();
+                        isWalkingSoundPlaying = true;
+                    }
                 }
-                if (input.IsKeyDown(Keys.S))
+                else if (input.IsKeyDown(Keys.S))
                 {
                     _cameraPosition += new Vector3(0, 0, speed);
                     Console.WriteLine(_cameraPosition);
                     Console.WriteLine(speed);
+
+                    if (!isWalkingSoundPlaying)
+                    {
+                        waveOutDeviceWalking.Stop();
+                        InitializeAudio();
+                        waveOutDeviceWalking.Play();
+                        isWalkingSoundPlaying = true;
+                    }
                 }
-                if (input.IsKeyDown(Keys.A))
+                else if (input.IsKeyDown(Keys.A))
                 {
                     _cameraPosition += new Vector3(-speed, 0, 0);
                     Console.WriteLine(_cameraPosition);
                     Console.WriteLine(speed);
+
+                    if (!isWalkingSoundPlaying)
+                    {
+                        waveOutDeviceWalking.Stop();
+                        InitializeAudio();
+                        waveOutDeviceWalking.Play();
+                        isWalkingSoundPlaying = true;
+                    }
                 }
-                if (input.IsKeyDown(Keys.D))
+                else if (input.IsKeyDown(Keys.D))
                 {
                     _cameraPosition += new Vector3(speed, 0, 0);
                     Console.WriteLine(_cameraPosition);
                     Console.WriteLine(speed);
+
+                    if (!isWalkingSoundPlaying)
+                    {
+                        waveOutDeviceWalking.Stop();
+                        InitializeAudio();
+                        waveOutDeviceWalking.Play();
+                        isWalkingSoundPlaying = true;
+                    }
                 }
+                else
+                {
+                    // Stop playing when no movement key is pressed
+                    if (isWalkingSoundPlaying)
+                    {
+                        waveOutDeviceWalking.Stop();
+                    }
+                }
+
                 if (input.IsKeyDown(Keys.Space))
                 {
                     _cameraPosition += new Vector3(0, speed, 0);
@@ -138,7 +200,7 @@ namespace StreetSovereings_
                     Console.WriteLine(_cameraPosition);
                     Console.WriteLine(speed);
                 }
-                if (input.IsKeyPressed(Keys.LeftControl) && !_leftControlPressed) 
+                if (input.IsKeyPressed(Keys.LeftControl) && !_leftControlPressed)
                 {
                     _initialSpeed = speed;
                     speed += speed;
@@ -224,7 +286,7 @@ namespace StreetSovereings_
                 GL.ShaderSource(fragmentShader, fragmentShaderSource);
                 GL.CompileShader(fragmentShader);
                 CheckShaderCompileStatus(fragmentShader);
-                
+
                 int shaderProgram = GL.CreateProgram();
                 GL.AttachShader(shaderProgram, vertexShader);
                 GL.AttachShader(shaderProgram, fragmentShader);
@@ -261,7 +323,6 @@ namespace StreetSovereings_
             {
                 _cubeManager.AddCube(x, y, z, rgba, mass);
             }
-
         }
     }
 }
