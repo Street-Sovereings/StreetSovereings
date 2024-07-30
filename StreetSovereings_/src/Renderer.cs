@@ -4,16 +4,17 @@ using OpenTK.Mathematics;
 using OpenTK.Windowing.Common;
 using OpenTK.Windowing.Desktop;
 using OpenTK.Windowing.GraphicsLibraryFramework;
-using StreetSovereings_.objects;
+using StreetSovereings_.src.objects;
 using System;
 
-namespace StreetSovereings_
+namespace StreetSovereings_.src
 {
     internal class Renderer
     {
         public class Game : GameWindow
         {
             private readonly CubeManager _cubeManager = new CubeManager();
+            private readonly PlaneManager _planeManager = new PlaneManager();
 
             private readonly float[] _vertices =
             {
@@ -102,6 +103,8 @@ namespace StreetSovereings_
 
                 // Add a default cube
                 AddCube(0.0f, 0.0f, 0.0f, new Vector4(1.0f, 0.0f, 0.0f, 1.0f), 1.0f);
+
+                AddPlane(0.0f, -1.0f, 0.0f, 5.0f, 0.1f, 5.0f, new Vector4(0.5f, 0.5f, 0.5f, 1.0f), 0.1f);
             }
 
             private void InitializeAudio()
@@ -224,14 +227,11 @@ namespace StreetSovereings_
                 GL.UseProgram(_shaderProgram);
 
                 // Update and set the transformation matrices
-                _rotation += 0.0005f;
-
                 var view = Matrix4.LookAt(_cameraPosition, Vector3.Zero, Vector3.UnitY);
                 var projection = Matrix4.CreatePerspectiveFieldOfView(MathHelper.DegreesToRadians(45.0f), Size.X / (float)Size.Y, 0.1f, 100.0f);
 
                 GL.UniformMatrix4(GL.GetUniformLocation(_shaderProgram, "view"), false, ref view);
                 GL.UniformMatrix4(GL.GetUniformLocation(_shaderProgram, "projection"), false, ref projection);
-
                 foreach (var cube in _cubeManager.GetCubes())
                 {
                     var model = Matrix4.CreateTranslation(cube.Position) * Matrix4.CreateRotationY(_rotation) * Matrix4.CreateRotationX(_rotation);
@@ -242,6 +242,16 @@ namespace StreetSovereings_
 
                     // Bind VAO and draw
                     GL.BindVertexArray(_vao);
+                    GL.DrawElements(PrimitiveType.Triangles, _indices.Length, DrawElementsType.UnsignedInt, 0);
+                }
+
+                foreach (var plane in _planeManager.GetPlanes())
+                {
+                    var model = Matrix4.CreateScale(plane.Size) * Matrix4.CreateTranslation(plane.Position);
+                    GL.UniformMatrix4(GL.GetUniformLocation(_shaderProgram, "model"), false, ref model);
+                    GL.Uniform4(GL.GetUniformLocation(_shaderProgram, "color"), plane.Color);
+
+                    GL.BindVertexArray(_vao); // Assuming VAO setup for planes is similar
                     GL.DrawElements(PrimitiveType.Triangles, _indices.Length, DrawElementsType.UnsignedInt, 0);
                 }
 
@@ -322,6 +332,11 @@ namespace StreetSovereings_
             public void AddCube(float x, float y, float z, Vector4 rgba, float mass)
             {
                 _cubeManager.AddCube(x, y, z, rgba, mass);
+            }
+
+            public void AddPlane(float x, float y, float z, float sizeX, float sizeY, float sizeZ, Vector4 rgba, float thickness)
+            {
+                _planeManager.AddPlane(x, y, z, sizeX, sizeY, sizeZ, rgba, thickness);
             }
         }
     }

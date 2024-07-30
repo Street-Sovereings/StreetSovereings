@@ -1,6 +1,6 @@
 ﻿using OpenTK.Mathematics;
 
-namespace StreetSovereings_.objects
+namespace StreetSovereings_.src.objects
 {
     public class Cube
     {
