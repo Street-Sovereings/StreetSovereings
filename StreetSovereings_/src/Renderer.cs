@@ -5,6 +5,7 @@ using OpenTK.Windowing.Common;
 using OpenTK.Windowing.Desktop;
 using OpenTK.Windowing.GraphicsLibraryFramework;
 using StreetSovereings_.src.objects;
+using StreetSovereings_.src.controllers.sounds;
 using System;
 
 namespace StreetSovereings_.src
@@ -101,10 +102,9 @@ namespace StreetSovereings_.src
 
                 GL.Enable(EnableCap.DepthTest);
 
-                // Add a default cube
-                AddCube(0.0f, 0.0f, 0.0f, new Vector4(1.0f, 0.0f, 0.0f, 1.0f), 1.0f);
+                // Add a default 
 
-                AddPlane(0.0f, -1.0f, 0.0f, 5.0f, 0.1f, 5.0f, new Vector4(0.5f, 0.5f, 0.5f, 1.0f), 0.1f);
+                AddPlane(0.0f, -1.0f, 0.0f, 10.0f, 0.1f, 10.0f, new Vector4(0.5f, 0.5f, 0.5f, 1.0f));
             }
 
             private void InitializeAudio()
@@ -334,9 +334,9 @@ namespace StreetSovereings_.src
                 _cubeManager.AddCube(x, y, z, rgba, mass);
             }
 
-            public void AddPlane(float x, float y, float z, float sizeX, float sizeY, float sizeZ, Vector4 rgba, float thickness)
+            public void AddPlane(float x, float y, float z, float sizeX, float sizeY, float sizeZ, Vector4 rgba)
             {
-                _planeManager.AddPlane(x, y, z, sizeX, sizeY, sizeZ, rgba, thickness);
+                _planeManager.AddPlane(x, y, z, sizeX, sizeY, sizeZ, rgba);
             }
         }
     }

@@ -8,14 +8,12 @@ namespace StreetSovereings_.src.objects
         public Vector3 Position { get; set; }
         public Vector3 Size { get; set; }
         public Vector4 Color { get; set; }
-        public float Thickness { get; set; }
 
-        public Plane(Vector3 position, Vector3 size, Vector4 color, float thickness)
+        public Plane(Vector3 position, Vector3 size, Vector4 color)
         {
             Position = position;
             Size = size;
             Color = color;
-            Thickness = thickness;
         }
     }
 
@@ -23,9 +21,9 @@ namespace StreetSovereings_.src.objects
     {
         private List<Plane> _planes = new List<Plane>();
 
-        public void AddPlane(float x, float y, float z, float sizeX, float sizeY, float sizeZ, Vector4 rgba, float thickness)
+        public void AddPlane(float x, float y, float z, float sizeX, float sizeY, float sizeZ, Vector4 rgba)
         {
-            var plane = new Plane(new Vector3(x, y, z), new Vector3(sizeX, sizeY, sizeZ), rgba, thickness);
+            var plane = new Plane(new Vector3(x, y, z), new Vector3(sizeX, sizeY, sizeZ), rgba);
             _planes.Add(plane);
         }
 
