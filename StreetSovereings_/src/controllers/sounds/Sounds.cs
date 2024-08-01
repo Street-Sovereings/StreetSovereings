@@ -6,7 +6,11 @@ using System.Threading.Tasks;
 
 namespace StreetSovereings_.src.controllers.sounds
 {
-    internal class walking
+    internal class Sounds
     {
+        public void InitializeSound()
+        {
+
+        }
     }
 }

@@ -19,16 +19,16 @@ namespace StreetSovereings_.src
 
             private readonly float[] _vertices =
             {
-                // Positions          // Colors
-                -0.5f, -0.5f, -0.5f,  1.0f, 0.0f, 0.0f, // Red
-                 0.5f, -0.5f, -0.5f,  0.0f, 1.0f, 0.0f, // Green
-                 0.5f,  0.5f, -0.5f,  0.0f, 0.0f, 1.0f, // Blue
-                -0.5f,  0.5f, -0.5f,  1.0f, 1.0f, 0.0f, // Yellow
-                -0.5f, -0.5f,  0.5f,  1.0f, 0.0f, 1.0f, // Magenta
-                 0.5f, -0.5f,  0.5f,  0.0f, 1.0f, 1.0f, // Cyan
-                 0.5f,  0.5f,  0.5f,  1.0f, 1.0f, 1.0f, // White
-                -0.5f,  0.5f,  0.5f,  0.0f, 0.0f, 0.0f, // Black
-            };
+    // Positions         
+    -0.5f, -0.5f, -0.5f,
+     0.5f, -0.5f, -0.5f,
+     0.5f,  0.5f, -0.5f,
+    -0.5f,  0.5f, -0.5f,
+    -0.5f, -0.5f,  0.5f,
+     0.5f, -0.5f,  0.5f,
+     0.5f,  0.5f,  0.5f,
+    -0.5f,  0.5f,  0.5f,
+};
 
             private readonly uint[] _indices =
             {
@@ -88,10 +88,8 @@ namespace StreetSovereings_.src
                 GL.BufferData(BufferTarget.ElementArrayBuffer, _indices.Length * sizeof(uint), _indices, BufferUsageHint.StaticDraw);
 
                 // Vertex attributes
-                GL.VertexAttribPointer(0, 3, VertexAttribPointerType.Float, false, 6 * sizeof(float), 0);
+                GL.VertexAttribPointer(0, 3, VertexAttribPointerType.Float, false, 3 * sizeof(float), 0);
                 GL.EnableVertexAttribArray(0);
-                GL.VertexAttribPointer(1, 3, VertexAttribPointerType.Float, false, 6 * sizeof(float), 3 * sizeof(float));
-                GL.EnableVertexAttribArray(1);
 
                 // Unbind VBO and VAO
                 GL.BindBuffer(BufferTarget.ArrayBuffer, 0);
@@ -102,10 +100,10 @@ namespace StreetSovereings_.src
 
                 GL.Enable(EnableCap.DepthTest);
 
-                // Add a default 
-
+                // Add a default plane
                 AddPlane(0.0f, -1.0f, 0.0f, 10.0f, 0.1f, 10.0f, new Vector4(0.5f, 0.5f, 0.5f, 1.0f));
             }
+
 
             private void InitializeAudio()
             {
@@ -182,14 +180,6 @@ namespace StreetSovereings_.src
                         isWalkingSoundPlaying = true;
                     }
                 }
-                else
-                {
-                    // Stop playing when no movement key is pressed
-                    if (isWalkingSoundPlaying)
-                    {
-                        waveOutDeviceWalking.Stop();
-                    }
-                }
 
                 if (input.IsKeyDown(Keys.Space))
                 {
@@ -232,16 +222,19 @@ namespace StreetSovereings_.src
 
                 GL.UniformMatrix4(GL.GetUniformLocation(_shaderProgram, "view"), false, ref view);
                 GL.UniformMatrix4(GL.GetUniformLocation(_shaderProgram, "projection"), false, ref projection);
+
+                // Bind VAO
+                GL.BindVertexArray(_vao);
+
                 foreach (var cube in _cubeManager.GetCubes())
                 {
                     var model = Matrix4.CreateTranslation(cube.Position) * Matrix4.CreateRotationY(_rotation) * Matrix4.CreateRotationX(_rotation);
                     GL.UniformMatrix4(GL.GetUniformLocation(_shaderProgram, "model"), false, ref model);
 
                     // Set the cube's color
-                    GL.Uniform4(GL.GetUniformLocation(_shaderProgram, "color"), cube.Color);
+                    GL.Uniform4(GL.GetUniformLocation(_shaderProgram, "ourColor"), cube.Color);
 
-                    // Bind VAO and draw
-                    GL.BindVertexArray(_vao);
+                    // Draw the cube
                     GL.DrawElements(PrimitiveType.Triangles, _indices.Length, DrawElementsType.UnsignedInt, 0);
                 }
 
@@ -249,43 +242,42 @@ namespace StreetSovereings_.src
                 {
                     var model = Matrix4.CreateScale(plane.Size) * Matrix4.CreateTranslation(plane.Position);
                     GL.UniformMatrix4(GL.GetUniformLocation(_shaderProgram, "model"), false, ref model);
-                    GL.Uniform4(GL.GetUniformLocation(_shaderProgram, "color"), plane.Color);
 
-                    GL.BindVertexArray(_vao); // Assuming VAO setup for planes is similar
+                    // Set the plane's color
+                    GL.Uniform4(GL.GetUniformLocation(_shaderProgram, "ourColor"), plane.Color);
+
+                    // Draw the plane
                     GL.DrawElements(PrimitiveType.Triangles, _indices.Length, DrawElementsType.UnsignedInt, 0);
                 }
 
                 SwapBuffers();
             }
 
+
             private int CreateShaderProgram()
             {
                 string vertexShaderSource = @"
-                #version 330 core
-                layout (location = 0) in vec3 aPosition;
-                layout (location = 1) in vec3 aColor;
+    #version 330 core
+    layout (location = 0) in vec3 aPosition;
 
-                uniform mat4 model;
-                uniform mat4 view;
-                uniform mat4 projection;
+    uniform mat4 model;
+    uniform mat4 view;
+    uniform mat4 projection;
 
-                out vec3 ourColor;
-
-                void main()
-                {
-                    gl_Position = projection * view * model * vec4(aPosition, 1.0);
-                    ourColor = aColor;
-                }";
+    void main()
+    {
+        gl_Position = projection * view * model * vec4(aPosition, 1.0);
+    }";
 
                 string fragmentShaderSource = @"
-                #version 330 core
-                in vec3 ourColor;
-                out vec4 color;
+    #version 330 core
+    uniform vec4 ourColor;
+    out vec4 color;
 
-                void main()
-                {
-                    color = vec4(ourColor, 1.0);
-                }";
+    void main()
+    {
+        color = ourColor;
+    }";
 
                 int vertexShader = GL.CreateShader(ShaderType.VertexShader);
                 GL.ShaderSource(vertexShader, vertexShaderSource);
@@ -308,6 +300,7 @@ namespace StreetSovereings_.src
 
                 return shaderProgram;
             }
+
 
             private void CheckShaderCompileStatus(int shader)
             {

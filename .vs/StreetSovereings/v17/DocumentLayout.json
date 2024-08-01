@@ -44,7 +44,7 @@
               "RelativeDocumentMoniker": "StreetSovereings_\\src\\Renderer.cs",
               "ToolTip": "E:\\Street_Sovereings_Game\\StreetSovereings\\StreetSovereings\\StreetSovereings_\\src\\Renderer.cs",
               "RelativeToolTip": "StreetSovereings_\\src\\Renderer.cs",
-              "ViewState": "AQIAADQBAAAAAAAAAAAAwEEBAAA8AAAA",
+              "ViewState": "AQIAAMEAAAAAAAAAAAAAAMYAAAAjAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-07-26T09:21:01.763Z",
               "EditorCaption": ""
@@ -59,8 +59,7 @@
               "RelativeToolTip": "StreetSovereings_\\src\\controllers\\sounds\\walking.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAcAAAABAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-07-30T18:39:46.039Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-07-30T18:39:46.039Z"
             },
             {
               "$type": "Document",
@@ -84,15 +83,9 @@
               "RelativeToolTip": "StreetSovereings_\\Program.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAA4AAAAkAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-07-21T13:18:37.475Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-07-21T13:18:37.475Z"
             }
           ]
-        },
-        {
-          "DockedWidth": 200,
-          "SelectedChildIndex": -1,
-          "Children": []
         }
       ]
     },
@@ -106,7 +99,7 @@
         "Y": 677,
         "Width": 1090,
         "Height": 1144,
-        "WindowState": 2
+        "WindowState": 0
       },
       "DocumentGroups": [
         {
@@ -121,7 +114,7 @@
               "RelativeDocumentMoniker": "StreetSovereings_\\src\\objects\\addPlane.cs",
               "ToolTip": "E:\\Street_Sovereings_Game\\StreetSovereings\\StreetSovereings\\StreetSovereings_\\src\\objects\\addPlane.cs",
               "RelativeToolTip": "StreetSovereings_\\src\\objects\\addPlane.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAsAAABDAAAA",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAsAAAAJAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-07-30T15:29:18.525Z",
               "EditorCaption": ""
