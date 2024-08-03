@@ -1,4 +1,5 @@
-﻿using NAudio.Wave;
+﻿using System;
+using NAudio.Wave;
 using OpenTK.Graphics.OpenGL4;
 using OpenTK.Mathematics;
 using OpenTK.Windowing.Common;
@@ -6,7 +7,6 @@ using OpenTK.Windowing.Desktop;
 using OpenTK.Windowing.GraphicsLibraryFramework;
 using StreetSovereings_.src.objects;
 using StreetSovereings_.src.controllers.sounds;
-using System;
 
 namespace StreetSovereings_.src
 {
@@ -14,21 +14,29 @@ namespace StreetSovereings_.src
     {
         public class Game : GameWindow
         {
+            private enum GameState
+            {
+                Menu,
+                Playing
+            }
+
+            private GameState _currentState = GameState.Menu;
+
             private readonly CubeManager _cubeManager = new CubeManager();
             private readonly PlaneManager _planeManager = new PlaneManager();
 
             private readonly float[] _vertices =
             {
-    // Positions         
-    -0.5f, -0.5f, -0.5f,
-     0.5f, -0.5f, -0.5f,
-     0.5f,  0.5f, -0.5f,
-    -0.5f,  0.5f, -0.5f,
-    -0.5f, -0.5f,  0.5f,
-     0.5f, -0.5f,  0.5f,
-     0.5f,  0.5f,  0.5f,
-    -0.5f,  0.5f,  0.5f,
-};
+                // Positions         
+                -0.5f, -0.5f, -0.5f,
+                 0.5f, -0.5f, -0.5f,
+                 0.5f,  0.5f, -0.5f,
+                -0.5f,  0.5f, -0.5f,
+                -0.5f, -0.5f,  0.5f,
+                 0.5f, -0.5f,  0.5f,
+                 0.5f,  0.5f,  0.5f,
+                -0.5f,  0.5f,  0.5f,
+            };
 
             private readonly uint[] _indices =
             {
@@ -44,6 +52,7 @@ namespace StreetSovereings_.src
             private int _vbo;
             private int _ebo;
             private int _shaderProgram;
+            private int _menuShaderProgram;
 
             private IWavePlayer waveOutDeviceWalking;
             private Mp3FileReader mp3FileReader;
@@ -56,6 +65,9 @@ namespace StreetSovereings_.src
 
             float speed = 0.001f;
             float _initialSpeed;
+
+            private Vector2 _playButtonPosition = new Vector2(-0.1f, -0.1f);
+            private Vector2 _playButtonSize = new Vector2(0.2f, 0.1f);
 
             public Game() : base(GameWindowSettings.Default, new NativeWindowSettings
             {
@@ -73,6 +85,17 @@ namespace StreetSovereings_.src
                 waveOutDeviceWalking = new WaveOutEvent();
                 waveOutDeviceWalking.PlaybackStopped += OnPlaybackWalkingStopped;
 
+                InitializeBuffers();
+                InitializeShaders();
+
+                GL.Enable(EnableCap.DepthTest);
+
+                // Add a default plane
+                AddPlane(0.0f, -1.0f, 0.0f, 10.0f, 0.1f, 10.0f, new Vector4(0.5f, 0.5f, 0.5f, 1.0f));
+            }
+
+            private void InitializeBuffers()
+            {
                 // Create VAO
                 _vao = GL.GenVertexArray();
                 GL.BindVertexArray(_vao);
@@ -94,16 +117,13 @@ namespace StreetSovereings_.src
                 // Unbind VBO and VAO
                 GL.BindBuffer(BufferTarget.ArrayBuffer, 0);
                 GL.BindVertexArray(0);
-
-                // Compile shaders and link the program
-                _shaderProgram = CreateShaderProgram();
-
-                GL.Enable(EnableCap.DepthTest);
-
-                // Add a default plane
-                AddPlane(0.0f, -1.0f, 0.0f, 10.0f, 0.1f, 10.0f, new Vector4(0.5f, 0.5f, 0.5f, 1.0f));
             }
 
+            private void InitializeShaders()
+            {
+                _shaderProgram = CreateShaderProgram(vertexShaderSource, fragmentShaderSource);
+                _menuShaderProgram = CreateShaderProgram(menuVertexShaderSource, menuFragmentShaderSource);
+            }
 
             private void InitializeAudio()
             {
@@ -124,80 +144,60 @@ namespace StreetSovereings_.src
 
                 var input = KeyboardState;
 
+                if (_currentState == GameState.Menu)
+                {
+                    if (MouseState.IsButtonDown(MouseButton.Left))
+                    {
+                        Vector2 mousePosition = new Vector2(MouseState.X, MouseState.Y);
+                        mousePosition = ScreenToNormalizedDeviceCoordinates(mousePosition, Size);
+
+                        if (IsMouseOverButton(mousePosition, _playButtonPosition, _playButtonSize))
+                        {
+                            _currentState = GameState.Playing;
+                        }
+                    }
+                }
+                else if (_currentState == GameState.Playing)
+                {
+                    UpdateGame(input);
+                }
+            }
+
+            private void UpdateGame(KeyboardState input)
+            {
                 if (input.IsKeyDown(Keys.W))
                 {
                     _cameraPosition += new Vector3(0, 0, -speed);
-                    Console.WriteLine(_cameraPosition);
-                    Console.WriteLine(speed);
-
-                    if (!isWalkingSoundPlaying)
-                    {
-                        waveOutDeviceWalking.Stop();
-                        InitializeAudio();
-                        waveOutDeviceWalking.Play();
-                        isWalkingSoundPlaying = true;
-                    }
+                    StartWalkingSound();
                 }
                 else if (input.IsKeyDown(Keys.S))
                 {
                     _cameraPosition += new Vector3(0, 0, speed);
-                    Console.WriteLine(_cameraPosition);
-                    Console.WriteLine(speed);
-
-                    if (!isWalkingSoundPlaying)
-                    {
-                        waveOutDeviceWalking.Stop();
-                        InitializeAudio();
-                        waveOutDeviceWalking.Play();
-                        isWalkingSoundPlaying = true;
-                    }
+                    StartWalkingSound();
                 }
                 else if (input.IsKeyDown(Keys.A))
                 {
                     _cameraPosition += new Vector3(-speed, 0, 0);
-                    Console.WriteLine(_cameraPosition);
-                    Console.WriteLine(speed);
-
-                    if (!isWalkingSoundPlaying)
-                    {
-                        waveOutDeviceWalking.Stop();
-                        InitializeAudio();
-                        waveOutDeviceWalking.Play();
-                        isWalkingSoundPlaying = true;
-                    }
+                    StartWalkingSound();
                 }
                 else if (input.IsKeyDown(Keys.D))
                 {
                     _cameraPosition += new Vector3(speed, 0, 0);
-                    Console.WriteLine(_cameraPosition);
-                    Console.WriteLine(speed);
-
-                    if (!isWalkingSoundPlaying)
-                    {
-                        waveOutDeviceWalking.Stop();
-                        InitializeAudio();
-                        waveOutDeviceWalking.Play();
-                        isWalkingSoundPlaying = true;
-                    }
+                    StartWalkingSound();
                 }
 
                 if (input.IsKeyDown(Keys.Space))
                 {
                     _cameraPosition += new Vector3(0, speed, 0);
-                    Console.WriteLine(_cameraPosition);
-                    Console.WriteLine(speed);
                 }
                 if (input.IsKeyDown(Keys.LeftShift))
                 {
                     _cameraPosition += new Vector3(0, -speed, 0);
-                    Console.WriteLine(_cameraPosition);
-                    Console.WriteLine(speed);
                 }
                 if (input.IsKeyPressed(Keys.LeftControl) && !_leftControlPressed)
                 {
                     _initialSpeed = speed;
                     speed += speed;
-                    Console.WriteLine(speed);
                     _leftControlPressed = true;
                 }
                 else if (input.IsKeyReleased(Keys.LeftControl) && _leftControlPressed)
@@ -207,34 +207,83 @@ namespace StreetSovereings_.src
                 }
             }
 
+            private void StartWalkingSound()
+            {
+                if (!isWalkingSoundPlaying)
+                {
+                    waveOutDeviceWalking.Stop();
+                    InitializeAudio();
+                    waveOutDeviceWalking.Play();
+                    isWalkingSoundPlaying = true;
+                }
+            }
+
             protected override void OnRenderFrame(FrameEventArgs args)
             {
                 base.OnRenderFrame(args);
 
                 GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 
-                // Use the shader program
+                if (_currentState == GameState.Menu)
+                {
+                    RenderMenu();
+                }
+                else if (_currentState == GameState.Playing)
+                {
+                    RenderGame();
+                }
+
+                SwapBuffers();
+            }
+
+            private void RenderMenu()
+            {
+                GL.UseProgram(_menuShaderProgram);
+
+                float[] buttonVertices = {
+                    _playButtonPosition.X, _playButtonPosition.Y,
+                    _playButtonPosition.X + _playButtonSize.X, _playButtonPosition.Y,
+                    _playButtonPosition.X + _playButtonSize.X, _playButtonPosition.Y + _playButtonSize.Y,
+                    _playButtonPosition.X, _playButtonPosition.Y + _playButtonSize.Y
+                };
+
+                uint[] buttonIndices = { 0, 1, 2, 2, 3, 0 };
+
+                int vbo = GL.GenBuffer();
+                GL.BindBuffer(BufferTarget.ArrayBuffer, vbo);
+                GL.BufferData(BufferTarget.ArrayBuffer, buttonVertices.Length * sizeof(float), buttonVertices, BufferUsageHint.StaticDraw);
+
+                int ebo = GL.GenBuffer();
+                GL.BindBuffer(BufferTarget.ElementArrayBuffer, ebo);
+                GL.BufferData(BufferTarget.ElementArrayBuffer, buttonIndices.Length * sizeof(uint), buttonIndices, BufferUsageHint.StaticDraw);
+
+                GL.VertexAttribPointer(0, 2, VertexAttribPointerType.Float, false, 2 * sizeof(float), 0);
+                GL.EnableVertexAttribArray(0);
+
+                GL.DrawElements(PrimitiveType.Triangles, buttonIndices.Length, DrawElementsType.UnsignedInt, 0);
+
+                GL.DisableVertexAttribArray(0);
+                GL.DeleteBuffer(vbo);
+                GL.DeleteBuffer(ebo);
+            }
+
+            private void RenderGame()
+            {
                 GL.UseProgram(_shaderProgram);
 
-                // Update and set the transformation matrices
                 var view = Matrix4.LookAt(_cameraPosition, Vector3.Zero, Vector3.UnitY);
                 var projection = Matrix4.CreatePerspectiveFieldOfView(MathHelper.DegreesToRadians(45.0f), Size.X / (float)Size.Y, 0.1f, 100.0f);
 
                 GL.UniformMatrix4(GL.GetUniformLocation(_shaderProgram, "view"), false, ref view);
                 GL.UniformMatrix4(GL.GetUniformLocation(_shaderProgram, "projection"), false, ref projection);
 
-                // Bind VAO
                 GL.BindVertexArray(_vao);
 
                 foreach (var cube in _cubeManager.GetCubes())
                 {
                     var model = Matrix4.CreateTranslation(cube.Position) * Matrix4.CreateRotationY(_rotation) * Matrix4.CreateRotationX(_rotation);
                     GL.UniformMatrix4(GL.GetUniformLocation(_shaderProgram, "model"), false, ref model);
-
-                    // Set the cube's color
                     GL.Uniform4(GL.GetUniformLocation(_shaderProgram, "ourColor"), cube.Color);
-
-                    // Draw the cube
                     GL.DrawElements(PrimitiveType.Triangles, _indices.Length, DrawElementsType.UnsignedInt, 0);
                 }
 
@@ -242,43 +291,15 @@ namespace StreetSovereings_.src
                 {
                     var model = Matrix4.CreateScale(plane.Size) * Matrix4.CreateTranslation(plane.Position);
                     GL.UniformMatrix4(GL.GetUniformLocation(_shaderProgram, "model"), false, ref model);
-
-                    // Set the plane's color
                     GL.Uniform4(GL.GetUniformLocation(_shaderProgram, "ourColor"), plane.Color);
-
-                    // Draw the plane
                     GL.DrawElements(PrimitiveType.Triangles, _indices.Length, DrawElementsType.UnsignedInt, 0);
                 }
 
-                SwapBuffers();
+                GL.BindVertexArray(0);
             }
 
-
-            private int CreateShaderProgram()
+            private int CreateShaderProgram(string vertexShaderSource, string fragmentShaderSource)
             {
-                string vertexShaderSource = @"
-    #version 330 core
-    layout (location = 0) in vec3 aPosition;
-
-    uniform mat4 model;
-    uniform mat4 view;
-    uniform mat4 projection;
-
-    void main()
-    {
-        gl_Position = projection * view * model * vec4(aPosition, 1.0);
-    }";
-
-                string fragmentShaderSource = @"
-    #version 330 core
-    uniform vec4 ourColor;
-    out vec4 color;
-
-    void main()
-    {
-        color = ourColor;
-    }";
-
                 int vertexShader = GL.CreateShader(ShaderType.VertexShader);
                 GL.ShaderSource(vertexShader, vertexShaderSource);
                 GL.CompileShader(vertexShader);
@@ -300,7 +321,6 @@ namespace StreetSovereings_.src
 
                 return shaderProgram;
             }
-
 
             private void CheckShaderCompileStatus(int shader)
             {
@@ -331,6 +351,63 @@ namespace StreetSovereings_.src
             {
                 _planeManager.AddPlane(x, y, z, sizeX, sizeY, sizeZ, rgba);
             }
+
+            private Vector2 ScreenToNormalizedDeviceCoordinates(Vector2 screenCoordinates, Vector2i screenSize)
+            {
+                return new Vector2(
+                    (2.0f * screenCoordinates.X) / screenSize.X - 1.0f,
+                    1.0f - (2.0f * screenCoordinates.Y) / screenSize.Y
+                );
+            }
+
+            private bool IsMouseOverButton(Vector2 mousePosition, Vector2 buttonPosition, Vector2 buttonSize)
+            {
+                return mousePosition.X > buttonPosition.X &&
+                       mousePosition.X < buttonPosition.X + buttonSize.X &&
+                       mousePosition.Y > buttonPosition.Y &&
+                       mousePosition.Y < buttonPosition.Y + buttonSize.Y;
+            }
+
+            private const string vertexShaderSource = @"
+                #version 330 core
+                layout (location = 0) in vec3 aPosition;
+
+                uniform mat4 model;
+                uniform mat4 view;
+                uniform mat4 projection;
+
+                void main()
+                {
+                    gl_Position = projection * view * model * vec4(aPosition, 1.0);
+                }";
+
+            private const string fragmentShaderSource = @"
+                #version 330 core
+                uniform vec4 ourColor;
+                out vec4 color;
+
+                void main()
+                {
+                    color = ourColor;
+                }";
+
+            private const string menuVertexShaderSource = @"
+                #version 330 core
+                layout (location = 0) in vec2 aPosition;
+
+                void main()
+                {
+                    gl_Position = vec4(aPosition, 0.0, 1.0);
+                }";
+
+            private const string menuFragmentShaderSource = @"
+                #version 330 core
+                out vec4 color;
+
+                void main()
+                {
+                    color = vec4(0.0, 0.8, 0.2, 1.0); // Green color for the button
+                }";
         }
     }
 }
