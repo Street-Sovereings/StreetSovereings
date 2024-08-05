@@ -53,6 +53,7 @@ namespace StreetSovereings_.src
             private int _ebo;
             private int _shaderProgram;
             private int _menuShaderProgram;
+            private int _frameShaderProgram;
 
             private IWavePlayer waveOutDeviceWalking;
             private Mp3FileReader mp3FileReader;
@@ -80,7 +81,7 @@ namespace StreetSovereings_.src
             protected override void OnLoad()
             {
                 base.OnLoad();
-                GL.ClearColor(Color4.CornflowerBlue);
+                GL.ClearColor(Color4.Black); // Set background color to black
 
                 waveOutDeviceWalking = new WaveOutEvent();
                 waveOutDeviceWalking.PlaybackStopped += OnPlaybackWalkingStopped;
@@ -123,6 +124,7 @@ namespace StreetSovereings_.src
             {
                 _shaderProgram = CreateShaderProgram(vertexShaderSource, fragmentShaderSource);
                 _menuShaderProgram = CreateShaderProgram(menuVertexShaderSource, menuFragmentShaderSource);
+                _frameShaderProgram = CreateShaderProgram(frameVertexShaderSource, frameFragmentShaderSource);
             }
 
             private void InitializeAudio()
@@ -238,6 +240,7 @@ namespace StreetSovereings_.src
 
             private void RenderMenu()
             {
+                GL.ClearColor(Color4.Black);
                 GL.UseProgram(_menuShaderProgram);
 
                 float[] buttonVertices = {
@@ -262,6 +265,14 @@ namespace StreetSovereings_.src
 
                 GL.DrawElements(PrimitiveType.Triangles, buttonIndices.Length, DrawElementsType.UnsignedInt, 0);
 
+                // Draw button frame
+                GL.UseProgram(_frameShaderProgram);
+                GL.LineWidth(2.0f);
+                GL.DrawElements(PrimitiveType.LineLoop, buttonIndices.Length, DrawElementsType.UnsignedInt, 0);
+
+                // Render Text (Placeholder, replace this with your text rendering)
+                // RenderText("Play", new Vector2(_playButtonPosition.X + 0.05f, _playButtonPosition.Y + 0.025f));
+
                 GL.DisableVertexAttribArray(0);
                 GL.DeleteBuffer(vbo);
                 GL.DeleteBuffer(ebo);
@@ -270,6 +281,7 @@ namespace StreetSovereings_.src
             private void RenderGame()
             {
                 GL.UseProgram(_shaderProgram);
+                GL.ClearColor(Color4.CornflowerBlue);
 
                 var view = Matrix4.LookAt(_cameraPosition, Vector3.Zero, Vector3.UnitY);
                 var projection = Matrix4.CreatePerspectiveFieldOfView(MathHelper.DegreesToRadians(45.0f), Size.X / (float)Size.Y, 0.1f, 100.0f);
@@ -407,6 +419,24 @@ namespace StreetSovereings_.src
                 void main()
                 {
                     color = vec4(0.0, 0.8, 0.2, 1.0); // Green color for the button
+                }";
+
+            private const string frameVertexShaderSource = @"
+                #version 330 core
+                layout (location = 0) in vec2 aPosition;
+
+                void main()
+                {
+                    gl_Position = vec4(aPosition, 0.0, 1.0);
+                }";
+
+            private const string frameFragmentShaderSource = @"
+                #version 330 core
+                out vec4 color;
+
+                void main()
+                {
+                    color = vec4(1.0, 1.0, 1.0, 1.0); // White color for the frame
                 }";
         }
     }
