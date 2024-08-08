@@ -1,0 +1,15 @@
+E:\Street_Sovereings_Game\StreetSovereings\StreetSovereings\StreetSovereings_.ModChecker\bin\Debug\net8.0\StreetSovereings_.ModChecker.exe
+E:\Street_Sovereings_Game\StreetSovereings\StreetSovereings\StreetSovereings_.ModChecker\bin\Debug\net8.0\StreetSovereings_.ModChecker.deps.json
+E:\Street_Sovereings_Game\StreetSovereings\StreetSovereings\StreetSovereings_.ModChecker\bin\Debug\net8.0\StreetSovereings_.ModChecker.runtimeconfig.json
+E:\Street_Sovereings_Game\StreetSovereings\StreetSovereings\StreetSovereings_.ModChecker\bin\Debug\net8.0\StreetSovereings_.ModChecker.dll
+E:\Street_Sovereings_Game\StreetSovereings\StreetSovereings\StreetSovereings_.ModChecker\bin\Debug\net8.0\StreetSovereings_.ModChecker.pdb
+E:\Street_Sovereings_Game\StreetSovereings\StreetSovereings\StreetSovereings_.ModChecker\obj\Debug\net8.0\StreetSovereings_.ModChecker.GeneratedMSBuildEditorConfig.editorconfig
+E:\Street_Sovereings_Game\StreetSovereings\StreetSovereings\StreetSovereings_.ModChecker\obj\Debug\net8.0\StreetSovereings_.ModChecker.AssemblyInfoInputs.cache
+E:\Street_Sovereings_Game\StreetSovereings\StreetSovereings\StreetSovereings_.ModChecker\obj\Debug\net8.0\StreetSovereings_.ModChecker.AssemblyInfo.cs
+E:\Street_Sovereings_Game\StreetSovereings\StreetSovereings\StreetSovereings_.ModChecker\obj\Debug\net8.0\StreetSovereings_.ModChecker.csproj.CoreCompileInputs.cache
+E:\Street_Sovereings_Game\StreetSovereings\StreetSovereings\StreetSovereings_.ModChecker\obj\Debug\net8.0\StreetSovereings_.ModChecker.sourcelink.json
+E:\Street_Sovereings_Game\StreetSovereings\StreetSovereings\StreetSovereings_.ModChecker\obj\Debug\net8.0\StreetSovereings_.ModChecker.dll
+E:\Street_Sovereings_Game\StreetSovereings\StreetSovereings\StreetSovereings_.ModChecker\obj\Debug\net8.0\refint\StreetSovereings_.ModChecker.dll
+E:\Street_Sovereings_Game\StreetSovereings\StreetSovereings\StreetSovereings_.ModChecker\obj\Debug\net8.0\StreetSovereings_.ModChecker.pdb
+E:\Street_Sovereings_Game\StreetSovereings\StreetSovereings\StreetSovereings_.ModChecker\obj\Debug\net8.0\StreetSovereings_.ModChecker.genruntimeconfig.cache
+E:\Street_Sovereings_Game\StreetSovereings\StreetSovereings\StreetSovereings_.ModChecker\obj\Debug\net8.0\ref\StreetSovereings_.ModChecker.dll

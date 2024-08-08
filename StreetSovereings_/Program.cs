@@ -12,7 +12,7 @@ namespace StreetSovereings_
             using (var game = new Renderer.Game())
             {
                 Console.WriteLine("Game runned!");
-                game.AddCube(0.0f, 1.0f, 0.0f, new Vector4(1.0f, 0.0f, 0.0f, 1.0f), 1.0f);
+                game.AddCube(0.0f, 1.0f, 0.0f, new Vector4(1.0f, 1.0f, 0.0f, 1.0f), 1.0f);
                 game.Run();
             }
         }

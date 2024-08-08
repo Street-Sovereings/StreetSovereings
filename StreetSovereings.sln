@@ -5,6 +5,8 @@ VisualStudioVersion = 17.10.34916.146
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StreetSovereings_", "StreetSovereings_\StreetSovereings_.csproj", "{31DC468E-5908-4424-88D1-5D082962D9CE}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StreetSovereings_.ModChecker", "StreetSovereings_.ModChecker\StreetSovereings_.ModChecker.csproj", "{AF2416DC-6273-47BC-81F9-EF973C7A7499}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{31DC468E-5908-4424-88D1-5D082962D9CE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{31DC468E-5908-4424-88D1-5D082962D9CE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{31DC468E-5908-4424-88D1-5D082962D9CE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AF2416DC-6273-47BC-81F9-EF973C7A7499}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AF2416DC-6273-47BC-81F9-EF973C7A7499}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AF2416DC-6273-47BC-81F9-EF973C7A7499}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AF2416DC-6273-47BC-81F9-EF973C7A7499}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
