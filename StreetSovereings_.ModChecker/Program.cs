@@ -12,7 +12,7 @@ class Program
 
         if (File.Exists(path))
         {
-            if (fileExtension == "vmod")
+            if (fileExtension == "ssmod")
             {
                 string fileData = File.ReadAllText(path);
                 Console.WriteLine(fileData);
