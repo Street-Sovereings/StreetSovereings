@@ -7,26 +7,36 @@ class Program
     {
         Console.WriteLine("Hello, Enter path for the mod:");
         string path = Console.ReadLine();
+        string fileExtension = Path.GetExtension(path);
+        fileExtension = fileExtension.TrimStart('.');
 
         if (File.Exists(path))
         {
-            string fileData = File.ReadAllText(path);
-            Console.WriteLine(fileData);
-            Console.WriteLine("\n Valid? Y/N");
-            string valid = Console.ReadLine().Trim().ToUpper();
+            if (fileExtension == "vmod")
+            {
+                string fileData = File.ReadAllText(path);
+                Console.WriteLine(fileData);
+                Console.WriteLine("\n Valid? Y/N");
+                string valid = Console.ReadLine().Trim().ToUpper();
 
-            if (valid == "Y")
-            {
-                Console.WriteLine("Checking");
-            }
-            else if (valid == "N")
-            {
-                Console.WriteLine("Exit code: 0x5 (ERROR_ACCESS_DENIED)");
+                if (valid == "Y")
+                {
+                    Console.WriteLine("Checking");
+                }
+                else if (valid == "N")
+                {
+                    Console.WriteLine("Exit code: 0x5 (ERROR_ACCESS_DENIED)");
+                }
+                else
+                {
+                    Console.WriteLine("Exit code: 0xD (ERROR_INVALID_DATA)");
+                }
             }
             else
             {
-                Console.WriteLine("Exit code: 0xD (ERROR_INVALID_DATA)");
+                Console.WriteLine("Exit code: 0xB (ERROR_BAD_FORMAT)");
             }
+            
         }
         else
         {
